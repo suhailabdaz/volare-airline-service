@@ -54,6 +54,9 @@ export default class MessageHandler {
       case 'get-flight':
         response = await controller.getFlight.bind(controller)(data);
         break;
+        case 'all-flights':
+          response = await controller.allFlights.bind(controller)();
+          break;
       default:
         response = 'Request-key notfound';
         break;

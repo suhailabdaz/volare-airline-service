@@ -106,6 +106,16 @@ export class AirlineRepository implements IAirlineRepository {
       throw new Error('db error');
     }
   }
+
+  async allFlights(): Promise<IFlight[] | null> {
+    try {
+      const flights = FlightModel.find();
+      return flights;
+    } catch (e: any) {
+      throw new Error('db error');
+    }
+  }
+
   async findById(id: string): Promise<IAirline | null> {
     try {
       const user = await AirlineModel.findById(id);

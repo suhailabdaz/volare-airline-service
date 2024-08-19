@@ -106,5 +106,16 @@ export class AirlineController {
       console.error(e);
     }
   };
+
+  allFlights = async () => {
+    try {
+      const response = await this.service.allFlights();
+      return response;
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+
   
 }

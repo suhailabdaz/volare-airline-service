@@ -14,7 +14,7 @@ export class AirlineService implements IAirlineService {
 
   constructor(repository: IAirlineRepository) {
     this.repository = repository;
-  }
+  } 
 
   // helper function send otp if user is new
   async register(email: string) {
@@ -162,6 +162,18 @@ export class AirlineService implements IAirlineService {
     try {
       const flight = await this.repository.flightfindById(id);
       return { success: true, flight_data: flight };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Error resending OTP: ${error.message}`);
+      }
+      throw error;
+    }
+  }
+
+  async allFlights() {
+    try {
+      const flight = await this.repository.allFlights();
+      return flight;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Error resending OTP: ${error.message}`);

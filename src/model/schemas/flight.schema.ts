@@ -2,27 +2,24 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-// Define the Seat interface
 interface Seat {
   number: string;
   position: 'window' | 'middle' | 'aisle';
   isAvailable: boolean;
+  userId?:string;
 }
 
-// Define the Row interface
 interface Row {
   row: number;
   seats: Seat[];
 }
 
-// Define the SeatLayout interface
 interface SeatLayout {
   economyClass: Row[];
   businessClass: Row[];
   firstClass: Row[];
 }
 
-// Define the Flight interface
 export interface IFlight extends Document {
   flight_code: string;
   manufacturer: string;
@@ -34,14 +31,12 @@ export interface IFlight extends Document {
   seatLayout: SeatLayout;
 }
 
-// Define the Seat schema
 const seatSchema = new mongoose.Schema({
   number: { type: String, required: true },
   position: { type: String, enum: ['window', 'middle', 'aisle'], required: true },
   isAvailable: { type: Boolean, default: true }
 });
 
-// Define the Row schema
 const rowSchema = new mongoose.Schema({
   row: { type: Number, required: true },
   seats: [seatSchema]
@@ -90,7 +85,7 @@ const flightSchema: Schema<IFlight> = new mongoose.Schema(
     }
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 

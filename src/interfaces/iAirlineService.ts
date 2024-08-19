@@ -1,5 +1,6 @@
 import { Airline } from '../model/airline.entity';
 import { Flight } from '../model/flight.entity';
+import { IFlight } from '../model/schemas/flight.schema';
 
 export interface IAirlineService {
   register(email: string): any;
@@ -18,6 +19,7 @@ export interface IAirlineService {
   getAirline(id:string):any
   updateUser(data:{}):any
   getFlight(id:string):any
+  allFlights():any
 
 
 

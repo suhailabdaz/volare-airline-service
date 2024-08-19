@@ -14,4 +14,6 @@ export interface IAirlineRepository {
   findByIdAndUpdate(id: string, values: string): Promise<IAirline | null>;
   getAirlines(): any;
   flightfindById(id: string): Promise<IFlight | null>;
+  allFlights():Promise<IFlight[] | null>;
+
 }
