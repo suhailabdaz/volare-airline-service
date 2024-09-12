@@ -6,6 +6,56 @@ import { Airline } from "../airline.entity";
 
 const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const cancellationPolicySchema: Schema = new Schema({
+  policyName: {
+    type: String,
+    required: true,
+  },
+  firstPeriodPenalty: {
+    type: Number,
+    required: true,
+  },
+  secondPeriodPenalty: {
+    type: Number,
+    required: true,
+  },
+  thirdPeriodPenalty: {
+    type: Number,
+    required: true,
+  },
+},
+);
+
+const baggagePolicySchema: Schema = new Schema({
+  policyName: {
+    type: String,
+    required: true,
+  },
+  cabinLimit: {
+    type: Number,
+    required: true,
+  },
+  luggageLimit: {
+    type: Number,
+    required: true,
+  },
+},
+);
+
+const mealSchema: Schema = new Schema({
+  mealName: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+},
+);
+
+
+
 export interface IAirline extends Document {
   airline_name: string;
   airline_email: string;
@@ -13,7 +63,22 @@ export interface IAirline extends Document {
   status: boolean;
   role:string;
   airline_code:string;
-  airline_image_link:string;
+  cancellationPolicies: {
+    policyName: string;
+    firstPeriodPenalty: number;
+    secondPeriodPenalty: number;
+    thirdPeriodPenalty: number;
+  }[];
+  baggagePolicies: {
+    policyName: string;
+    cabinLimit: number;
+    luggageLimit: number;
+  }[];
+    meals: {
+      mealName: string;
+      price: number;
+    }[];
+    airline_image_link:string;
   comparePassword: (password: string) => Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
@@ -43,6 +108,9 @@ const airlineSchema: Schema<IAirline> = new mongoose.Schema(
     airline_password: {
       type: String,
     },
+    cancellationPolicies: [cancellationPolicySchema],
+    baggagePolicies: [baggagePolicySchema],
+    meals: [mealSchema],
     airline_image_link: {
       type: String,
     },

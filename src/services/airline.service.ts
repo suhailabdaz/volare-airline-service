@@ -1,4 +1,4 @@
-import { IAirlineService } from '../interfaces/iAirlineService';
+import { Baggage, Cancelation, IAirlineService, Meals } from '../interfaces/iAirlineService';
 import { IAirlineRepository } from '../interfaces/iAirlineRepository';
 import { Airline } from '../model/airline.entity';
 import jwt, { Secret } from 'jsonwebtoken';
@@ -197,4 +197,79 @@ export class AirlineService implements IAirlineService {
       throw error;
     }
   }
+async addBaggagePolicy(data: { airlineId: string; baggage: Baggage; }) {
+  try {
+    const baggagePolicy = await this.repository.addBaggagePolicy(data.airlineId,data.baggage);
+    return baggagePolicy;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error resending OTP: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
+async addCancellationPolicy(data: { airlineId: string; cancellation: Cancelation; }) {
+  try {
+    const cancellationPolicy = await this.repository.addCancellationPolicy(data.airlineId,data.cancellation);
+    return cancellationPolicy;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error resending OTP: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
+async addMeals(data: { airlineId: string; meal: Meals; }) {
+  try {
+    const mealsArray = await this.repository.addMeals(data.airlineId,data.meal);
+    return mealsArray;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error resending OTP: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
+async getAllBaggagePolicy(airlineId: string) {
+  try {
+    const allBaggage = await this.repository.getAllBaggagePolicy(airlineId);
+    return allBaggage;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error resending OTP: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
+async getAllCancellationPolicy(airlineId: string) {
+  try {
+    const allCancelation = await this.repository.getAllCancellationPolicy(airlineId);
+    return allCancelation;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error resending OTP: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
+
+async getAllMeals(airlineId: string) {
+  try {
+    const allMeals = await this.repository.getAllMeals(airlineId);
+    console.log(allMeals,'allmeals');
+    
+    return allMeals;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error resending OTP: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
 }

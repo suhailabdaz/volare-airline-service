@@ -1,4 +1,4 @@
-import { IAirlineService } from "../interfaces/iAirlineService"
+import { Baggage, Cancelation, IAirlineService, Meals } from "../interfaces/iAirlineService"
 import { Airline } from "../model/airline.entity";
 import { Flight } from "../model/flight.entity";
 
@@ -110,6 +110,61 @@ export class AirlineController {
   allFlights = async () => {
     try {
       const response = await this.service.allFlights();
+      return response;
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+  addBaggagePolicy = async (data:{airlineId:string,baggage:Baggage}) => {
+    try {
+      const response = await this.service.addBaggagePolicy(data);
+      return response;
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+
+  addCancellationPolicy = async (data:{airlineId:string,cancellation:Cancelation}) => {
+    try {
+      const response = await this.service.addCancellationPolicy(data);
+      return response;
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+  addMeals = async (data:{airlineId:string,meal:Meals}) => {
+    try {
+      const response = await this.service.addMeals(data);
+      return response;
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+  getAllBaggagePolicy = async (airlineId:string) => {
+    try {
+      const response = await this.service.getAllBaggagePolicy(airlineId);
+      return response;
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+  getAllCancellationPolicy= async (airlineId:string) => {
+    try {
+      const response = await this.service.getAllCancellationPolicy(airlineId);
+      return response;
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+  getAllMeals= async (airlineId:string) => {
+    try {
+      const response = await this.service.getAllMeals(airlineId);
       return response;
     } catch (e: any) {
       console.error(e);

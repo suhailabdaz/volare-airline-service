@@ -54,14 +54,37 @@ export default class MessageHandler {
       case 'get-flight':
         response = await controller.getFlight.bind(controller)(data);
         break;
-        case 'all-flights':
-          response = await controller.allFlights.bind(controller)();
-          break;
+      case 'all-flights':
+        response = await controller.allFlights.bind(controller)();
+        break;
+      case 'all-baggage-policies':
+        response = await controller.getAllBaggagePolicy.bind(controller)(data);
+        break;
+      case 'all-cancelation-policies':
+        response = await controller.getAllCancellationPolicy.bind(controller)(
+          data
+        );
+        break;
+      case 'all-meals':
+        response = await controller.getAllMeals.bind(controller)(data);
+        break;
+      case 'add-baggage-policy':
+        response = await controller.addBaggagePolicy.bind(controller)(data);
+        break;
+      case 'add-cancelation-policy':
+        response = await controller.addCancellationPolicy.bind(controller)(
+          data
+        );
+        break;
+      case 'add-meals':
+        response = await controller.addMeals.bind(controller)(data);
+        break;
       default:
         response = 'Request-key notfound';
         break;
     }
-    //Produce the response back to the client
+
+    
     await rabbitClient.produce(response, correlationId, replyTo);
   }
 }

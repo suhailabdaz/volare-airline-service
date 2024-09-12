@@ -3,16 +3,10 @@ import AirlineModel, { IAirline } from '../model/schemas/airline.schema';
 import { Airline } from '../model/airline.entity';
 import FlightModel, { IFlight } from '../model/schemas/flight.schema';
 import { Flight } from '../model/flight.entity';
+import { Baggage, Cancelation, Meals } from '../interfaces/iAirlineService';
 
 export class AirlineRepository implements IAirlineRepository {
   
-
-
-
-  
-
-
- 
 
 
   register(airlineData: Airline): Promise<IAirline | null> {
@@ -144,6 +138,82 @@ export class AirlineRepository implements IAirlineRepository {
       throw new Error('db error');
     }
   }
+  async addBaggagePolicy(airlineId: string, baggage: Baggage): Promise<Baggage | null> {
+    try {
+      const updatedAirline = await AirlineModel.findByIdAndUpdate(
+        airlineId,
+        { $push: { baggagePolicies: baggage } },
+        { new: true }
+      );
+      return updatedAirline ? updatedAirline.baggagePolicies[updatedAirline.baggagePolicies.length - 1] : null;
+    } catch (e: any) {
+      console.error('Error adding baggage policy:', e);
+      throw new Error('db error');
+    }
+  }
 
+  async addCancellationPolicy(airlineId: string, data: Cancelation): Promise<Cancelation | null> {
+    try {
+      const updatedAirline = await AirlineModel.findByIdAndUpdate(
+        airlineId,
+        { $push: { cancellationPolicies: data } },
+        { new: true}
+      );
+      return updatedAirline ? updatedAirline.cancellationPolicies[updatedAirline.cancellationPolicies.length - 1] : null;
+    } catch (e: any) {
+      console.error('Error adding cancellation policy:', e);
+      throw new Error('db error');
+    }
+  }
+
+  async addMeals(airlineId: string, data: Meals): Promise<Meals | null> {
+    try {
+      const updatedAirline = await AirlineModel.findByIdAndUpdate(
+        airlineId,
+        { $push: { meals: data } },
+        { new: true}
+      );
+      return updatedAirline ? updatedAirline.meals[updatedAirline.meals.length - 1] : null;
+    } catch (e: any) {
+      console.error('Error adding meals:', e);
+      throw new Error('db error');
+    }
+  }
+
+  async getAllBaggagePolicy(airlineId: string): Promise<Baggage[] | null> {
+    try {
+      const airline = await AirlineModel.findById(airlineId);
+      return airline ? airline.baggagePolicies : null;
+    } catch (e: any) {
+      console.error('Error fetching all baggage policies:', e);
+      throw new Error('db error');
+    }
+  }
+
+  async getAllCancellationPolicy(airlineId: string): Promise<Cancelation[] | null> {
+    try {
+      const airline = await AirlineModel.findById(airlineId);
+      return airline ? airline.cancellationPolicies : null;
+    } catch (e: any) {
+      console.error('Error fetching all cancellation policies:', e);
+      throw new Error('db error');
+    }
+  }
+
+  async getAllMeals(airlineId: string): Promise<Meals[] | null> {
+    try {
+      const airline = await AirlineModel.findById(airlineId);
+      console.log(airline ? airline.meals : null);
+      
+      return airline ? airline.meals : null;
+    } catch (e: any) {
+      console.error('Error fetching all meals:', e);
+      throw new Error('db error');
+    }
+  }
+  
+  
+  
+  
   
 }
